@@ -21,18 +21,18 @@ services:
     depends_on:
       - experience-api
 
-  keycloak:
-    image: jboss/keycloak:12.0.4
-    environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
-      - KEYCLOAK_FRONTEND_URL=http://localhost:8080/auth
-      - KEYCLOAK_IMPORT=/tmp/pm4ml-realm.json
-      - DB_VENDOR=h2
-    volumes:
-      - ./keycloak-realm.json:/tmp/pm4ml-realm.json
-    ports:
-      - "8080:8080"
+  # keycloak:
+  #   image: jboss/keycloak:12.0.4
+  #   environment:
+  #     - KEYCLOAK_USER=admin
+  #     - KEYCLOAK_PASSWORD=admin
+  #     - KEYCLOAK_FRONTEND_URL=http://localhost:8080/auth
+  #     - KEYCLOAK_IMPORT=/tmp/pm4ml-realm.json
+  #     - DB_VENDOR=h2
+  #   volumes:
+  #     - ./keycloak-realm.json:/tmp/pm4ml-realm.json
+  #   ports:
+  #     - "8080:8080"
 
   experience-api:
     image: pm4ml/mojaloop-payment-manager-experience-api:2.0.5
@@ -57,7 +57,7 @@ services:
       - SESSION_SECURE=false
     depends_on:
       - management-api
-      - keycloak
+      # - keycloak
       - redis
 
   management-api:
@@ -110,8 +110,8 @@ services:
     depends_on:
       redis:
         condition: service_started
-      keycloak:
-        condition: service_started
+      # keycloak:
+      #   condition: service_started
       vault-dev:
         condition: service_healthy
 
@@ -168,11 +168,11 @@ services:
     - -c
     - "yarn start:api-svc"
     environment:
-      - AUTO_ACCEPT_PARTY=true
-      - AUTO_ACCEPT_QUOTES=true
-      - BACKEND_ENDPOINT=merchant-ccc-here
+      - AUTO_ACCEPT_PARTY=false
+      - AUTO_ACCEPT_QUOTES=false
+      - BACKEND_ENDPOINT=172.17.0.1:3003
       - CACHE_URL=redis://redis:6379/1
-      - DFSP_ID=dfsp1
+      - DFSP_ID=merchantdfsp
       - ENABLE_TEST_FEATURES=true
       - INBOUND_LISTEN_PORT=4000
       - INBOUND_MUTUAL_TLS_ENABLED=false
@@ -239,11 +239,11 @@ services:
     - -c
     - "yarn start:api-svc"
     environment:
-      - AUTO_ACCEPT_PARTY=true
-      - AUTO_ACCEPT_QUOTES=true
-      - BACKEND_ENDPOINT=airtel-cc-here
+      - AUTO_ACCEPT_PARTY=false
+      - AUTO_ACCEPT_QUOTES=false
+      - BACKEND_ENDPOINT=172.17.0.1:3002
       - CACHE_URL=redis://redis:6379/2
-      - DFSP_ID=dfsp1
+      - DFSP_ID=airteldfsp
       - ENABLE_TEST_FEATURES=true
       - INBOUND_LISTEN_PORT=4000
       - INBOUND_MUTUAL_TLS_ENABLED=false
