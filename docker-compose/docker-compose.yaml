@@ -203,7 +203,7 @@ services:
       # - OAUTH_CLIENT_KEY={{ CHANGE BEFORE INSTALL e.g. k9edbgS09cE9qAkiVEaz5Hmuc5Ua }}
       # - OAUTH_CLIENT_SECRET={{ CHANGE BEFORE INSTALL e.g. UvMTwwj7am2agjkAfvmElNte4ewa }}
       - VALIDATE_INBOUND_JWS=false
-      - RESERVE_NOTIFICATION=false
+      - RESERVE_NOTIFICATION=true
       # - RESOURCE_VERSIONS="transfers=1.1"
       - PM4ML_ENABLED=true
       - ENABLE_BACKEND_EVENT_HANDLER=false
